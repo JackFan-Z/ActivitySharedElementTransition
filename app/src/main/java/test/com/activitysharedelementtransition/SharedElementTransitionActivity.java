@@ -5,6 +5,7 @@ import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.transition.AutoTransition;
 import android.transition.ChangeBounds;
 import android.transition.ChangeClipBounds;
@@ -29,8 +30,9 @@ import test.com.activitysharedelementtransition.adapters.SingleImageAdapter;
 import test.com.activitysharedelementtransition.intents.ComposedIntent;
 import test.com.activitysharedelementtransition.intents.SharedElementTransitionIntent;
 import test.com.activitysharedelementtransition.intents.SingleImageIntent;
+import test.com.activitysharedelementtransition.transition.MySharedElementCallback;
 
-public class SharedElementTransitionActivity extends Activity
+public class SharedElementTransitionActivity extends AppCompatActivity
         implements SingleImageAdapter.OnItemCLickListener,
         ComposedAdapter.OnItemCLickListener {
 
@@ -63,7 +65,7 @@ public class SharedElementTransitionActivity extends Activity
         images.add(R.drawable.chiot7);
         images.add(R.drawable.chiot8);
 
-        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
         mRecyclerView.setLayoutManager(layoutManager);
         SharedElementTransitionIntent intent = new SharedElementTransitionIntent(getIntent());
 
@@ -101,7 +103,7 @@ public class SharedElementTransitionActivity extends Activity
 
 //        getWindow().setSharedElementEnterTransition(new AutoTransition());
 //        getWindow().setSharedElementExitTransition(new AutoTransition());
-
+        setEnterSharedElementCallback(new MySharedElementCallback());
         startActivity(intent, options.toBundle());
 
     }

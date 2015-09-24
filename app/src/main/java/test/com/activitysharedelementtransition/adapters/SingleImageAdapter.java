@@ -1,11 +1,17 @@
 package test.com.activitysharedelementtransition.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.facebook.common.util.UriUtil;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -39,7 +45,17 @@ public class SingleImageAdapter extends RecyclerView.Adapter<SingleImageAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        viewHolder.mImageView.setImageResource(getItem(i));
+        //viewHolder.mImageView.setImageResource(getItem(i));
+        SimpleDraweeView imgView = (SimpleDraweeView) viewHolder.mImageView;
+        Uri uri = new Uri.Builder()
+                .scheme(UriUtil.LOCAL_RESOURCE_SCHEME) // "res"
+                .path(String.valueOf(getItem(i)))
+                .build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .build();
+        imgView.setController(controller);
+
         viewHolder.mImageView.setTransitionName(
                 getImageTransitionName(viewHolder.mImageView.getContext(), i)
         );
